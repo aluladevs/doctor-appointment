@@ -1,0 +1,27 @@
+.main {
+    min-height: 100vh;
+    background: #F2F8FF;
+}
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    text-align: center;
+    background: #FFFFFF;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.content {
+    width: calc(100% - 250px);
+    padding: 20px;
+}
+
+.appbar {
+    width: calc(100% - 250px);
+    /*height: 70px;*/
+    position: fixed;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
