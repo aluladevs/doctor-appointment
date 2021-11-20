@@ -11,7 +11,7 @@ export default function MainLayout(props) {
 
     return (
         <div className="main flex">
-            <div className="sidebar py-8 px-7">
+            <div className="sidebar w-1/6 py-8 px-7 lg:block sm:hidden">
                 <div className="text-lg mb-6">
                     <Image alt="logo" src={Logo} width={140} height={40}/>
                 </div>
@@ -22,11 +22,11 @@ export default function MainLayout(props) {
                     </div>
                 ))}
             </div>
-            <div className="content ml-auto ">
+            <div className="md:w-5/6 md:ml-auto sm:w-full sm:m-0">
                 <MainAppBar
                     title={title}
                     subtitle={subtitle}/>
-                <div className="p-6 rounded-2xl">
+                <div className="px-10 py-6 rounded-2xl mt-24">
                     {children}
                 </div>
             </div>

@@ -1,30 +1,25 @@
+import Image from "next/image";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import Logo from "../assets/logo.svg";
 
-export default function AppBar() {
-    const [scroll, setScroll] = useState(false);
-
-    const changeScroll = () => {
-        if (window.scrollY > 927) {
-            setScroll(true);
-        } else {
-            setScroll(false);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', changeScroll);
-
-        return () => window.removeEventListener('scroll', changeScroll);
-    },[]);
-
+export default function AppBar({ isScroll }) {
     return (
-        <div className="fixed w-full flex justify-between py-3 px-10 bg-transparent z-40">
-            <div className="text-lg">Logo</div>
+        <div className={`fixed w-full flex justify-between py-3 px-10 z-40
+         ${isScroll ? "bg-white shadow-md" : ""}`}>
+            <Image src={Logo} width={160} height={60}/>
 
-            <div className="flex">
+            <div className="flex items-center gap-4">
                 <Link href="/">
-                    <button className="py-2.5 px-5">Home</button>
+                    <button className="py-2.5 px-7 text-gray-700 text-sm">About</button>
+                </Link>
+                <Link href="/">
+                    <button className="py-2.5 px-7 text-gray-700 text-sm">Our Doctors</button>
+                </Link>
+                <Link href="/login">
+                    <button className="py-2.5 px-7 text-primary text-sm">Login</button>
+                </Link>
+                <Link href="/register">
+                    <button className="h-12 px-7 text-white bg-primary rounded-xl">Get Started</button>
                 </Link>
             </div>
         </div>

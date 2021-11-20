@@ -1,4 +1,3 @@
-import Image from "next/image";
 import MainLayout from "../../components/MainLayout";
 import PatientIcon from "../../assets/patient.svg";
 import DoctorIcon from "../../assets/doctor.svg";

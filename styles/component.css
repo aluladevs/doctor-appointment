@@ -2,3 +2,7 @@
     border-radius: 25px;
     box-shadow: rgba(0, 0, 0, 0.1) 0 10px 50px;
 }
+
+.shadow {
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+}

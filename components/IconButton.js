@@ -1,6 +1,8 @@
-export default function IconButton({ children, color }) {
+export default function IconButton({ children, color, onClick }) {
     return (
-        <button className={`p-2 rounded-lg shadow-md bg-${color ?? "white"}`}>
+        <button
+            onClick={onClick}
+            className={`p-2 rounded-lg shadow bg-${color ?? "white"}`}>
             {children}
         </button>
     )
