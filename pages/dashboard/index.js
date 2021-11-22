@@ -5,11 +5,11 @@ import StaffIcon from "../../assets/staff.svg";
 import ReportIcon from "../../assets/report.svg";
 import {useState} from "react";
 import {TimeFilter} from "../../constants/filter";
-import Widget from "./components/Widget";
+import Widget from "../../components/dashboard/Widget";
 import Card from "../../components/Card";
-import AppointmentChart from "./components/AppointmentChart";
-import GenderChart from "./components/GenderChart";
-import DepartmentChart from "./components/DepartmentChart";
+import AppointmentChart from "../../components/dashboard/AppointmentChart";
+import GenderChart from "../../components/dashboard/GenderChart";
+import DepartmentChart from "../../components/dashboard/DepartmentChart";
 
 export default function Dashboard() {
     const [filter, setFilter] = useState({

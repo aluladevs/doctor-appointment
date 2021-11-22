@@ -12,4 +12,6 @@ const DoctorSchema = new mongoose.Schema({
     experience: Number
 }, { timestamps: true });
 
-export default mongoose.models.Doctor || mongoose.model('Doctor', DoctorSchema);
+const Doctor = mongoose.models.Doctor || mongoose.model('Doctor', DoctorSchema);
+
+export default Doctor;

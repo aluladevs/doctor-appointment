@@ -1,11 +1,12 @@
 import {useState} from "react";
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 
-export default function Select({ options, value, name, label, selected, onChange }) {
+export default function Select(props) {
+    const { options, value, name, label, selected, onChange, className, useSearch } = props;
     const [open, setOpen] = useState(false);
-
+    console.log(value, selected)
     return (
-        <div>
+        <div className={className}>
             <p className="text-sm">{label}</p>
             <div className="relative">
                 <button type="button" onClick={() => setOpen(!open)}
@@ -19,9 +20,11 @@ export default function Select({ options, value, name, label, selected, onChange
                     <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-xl py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                         tabIndex="-1" role="listbox" aria-labelledby="listbox-label"
                         aria-activedescendant="listbox-option-3">
-                        <li className="p-2">
-                            <input className="p-2 border-2 rounded-md h-8 w-full focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"/>
-                        </li>
+                        {useSearch && (
+                            <li className="p-2">
+                                <input className="p-2 border-2 rounded-md h-8 w-full focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"/>
+                            </li>
+                        )}
                         {options.map((item, i) => (
                             <li key={i} className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
                                 id="listbox-option-0" onClick={() => onChange({target: {name, value: item}})}>

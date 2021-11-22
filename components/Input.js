@@ -1,6 +1,6 @@
 export default function Input(props) {
     const { label, error } = props;
-    console.log(error);
+
     return (
         <div className="w-full">
             <p className="text-sm">{label}</p>

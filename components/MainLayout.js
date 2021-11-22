@@ -3,11 +3,41 @@ import Logo from "../assets/logo.svg";
 import MainAppBar from "./MainAppBar";
 import {useRouter} from "next/router";
 import Menus from "../constants/menu";
-import {Component} from "react";
+import {Component, useEffect, useRef, useState} from "react";
+import {getSession} from "next-auth/client";
 
 export default function MainLayout(props) {
     const { children, title, subtitle } = props;
-    const { pathname } = useRouter();
+    const { pathname, push } = useRouter();
+    const mounted = useRef(false);
+
+    const [scroll, setScroll] = useState(false);
+
+    const changeScroll = () => {
+        if (window.scrollY > 50) {
+            setScroll(true);
+        } else {
+            setScroll(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', changeScroll);
+
+        return () => window.removeEventListener('scroll', changeScroll);
+    },[]);
+
+    useEffect(() => {
+        if (!mounted.current) {
+            getSession().then(session => {
+                if (!session) {
+                    push("/");
+                }
+            });
+
+            mounted.current = true;
+        }
+    }, [push]);
 
     return (
         <div className="main flex">
@@ -22,10 +52,11 @@ export default function MainLayout(props) {
                     </div>
                 ))}
             </div>
+            <MainAppBar
+                title={title}
+                subtitle={subtitle}
+                isScroll={scroll}/>
             <div className="md:w-5/6 md:ml-auto sm:w-full sm:m-0">
-                <MainAppBar
-                    title={title}
-                    subtitle={subtitle}/>
                 <div className="px-10 py-6 rounded-2xl mt-24">
                     {children}
                 </div>

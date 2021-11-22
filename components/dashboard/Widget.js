@@ -1,8 +1,8 @@
-import Card from "../../../components/Card";
-import SmallSelect from "../../../components/SmallSelect";
-import {TimeFilter} from "../../../constants/filter";
+import Card from "../Card";
+import SmallSelect from "../SmallSelect";
+import {TimeFilter} from "../../constants/filter";
 import Image from "next/image";
-import PatientIcon from "../../../assets/patient.svg";
+import PatientIcon from "../../assets/patient.svg";
 
 export default function Widget(props) {
     const { title, label, color, icon, onChange, content } = props;

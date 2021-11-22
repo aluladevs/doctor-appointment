@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Image from "next/image";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Layout from "../components/Layout";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -9,6 +9,7 @@ import Datepicker from "../components/Datepicker";
 import Banner from "../assets/frontpage-illustration.svg";
 import SelectInput from "../components/SelectInput";
 import TextArea from "../components/TextArea";
+import {useSelector} from "react-redux";
 
 const doctors = [
   { name: "A" },
@@ -21,11 +22,16 @@ const doctors = [
 ];
 
 export default function Home(props) {
+  const selector = useSelector(state => state.general);
   const [image, setImage] = useState(null);
 
   const [form, setForm] = useState({
     doctor: null
   });
+
+  useEffect(() => {
+    console.log(selector)
+  }, []);
 
   const handleChangeForm = (e) => {
     setForm({
@@ -54,10 +60,10 @@ export default function Home(props) {
   ];
 
   const slots = [
-      "12:00 - 13:00",
-      "12:00 - 13:00",
-      "12:00 - 13:00",
-      "12:00 - 13:00",
+    "12:00 - 13:00",
+    "12:00 - 13:00",
+    "12:00 - 13:00",
+    "12:00 - 13:00",
   ];
 
   return (
@@ -89,11 +95,11 @@ export default function Home(props) {
                   options={doctors}
                   value={form.doctor}
                   selected={form.doctor?.name}
-                onChange={handleChangeForm}/>
+                  onChange={handleChangeForm}/>
             </div>
             <div>
               <Datepicker
-                label="Datepicker"/>
+                  label="Datepicker"/>
             </div>
             <div>
               <Input
@@ -101,8 +107,8 @@ export default function Home(props) {
             </div>
             <div>
               <SelectInput
-                label="Phone Number"
-                options={countries}/>
+                  label="Phone Number"
+                  options={countries}/>
             </div>
           </div>
           <div className="mt-4">
@@ -133,9 +139,10 @@ export async function getServerSideProps(ctx) {
   let dev = process.env.NODE_ENV !== 'production';
   let { DEV_URL, PROD_URL } = process.env;
 
-  // request posts from api
+  await fetch(`${dev ? DEV_URL : PROD_URL}/api/default`)
+
   let response = await fetch(`${dev ? DEV_URL : PROD_URL}/api/user`);
-  // extract the data
+
   let data = await response.json();
 
   return {

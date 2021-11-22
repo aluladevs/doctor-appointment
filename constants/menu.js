@@ -1,4 +1,12 @@
-import {HomeIcon, UsersIcon} from "@heroicons/react/outline";
+import {
+    BeakerIcon, CalendarIcon,
+    ClipboardIcon,
+    ClipboardListIcon, CogIcon,
+    HomeIcon,
+    IdentificationIcon, TemplateIcon,
+    UsersIcon
+} from "@heroicons/react/outline";
+import Roles from "./role";
 
 const Menus = [
     {
@@ -7,9 +15,51 @@ const Menus = [
         icon: HomeIcon
     },
     {
+        name: "Department",
+        path: "/department",
+        icon: TemplateIcon,
+        roles: [Roles.admin.value]
+    },
+    {
         name: "User",
         path: "/user",
-        icon: UsersIcon
+        icon: UsersIcon,
+        roles: [Roles.admin.value, Roles.staff.value]
+    },
+    {
+        name: "Doctor",
+        path: "/doctor",
+        icon: BeakerIcon,
+        roles: [Roles.admin.value, Roles.staff.value]
+    },
+    {
+        name: "Patient",
+        path: "/patient",
+        icon: ClipboardIcon,
+        roles: [Roles.admin.value, Roles.staff.value]
+    },
+    {
+        name: "Staff",
+        path: "/staff",
+        icon: IdentificationIcon,
+        roles: [Roles.admin.value]
+    },
+    {
+        name: "Appointment",
+        path: "/appointment",
+        icon: ClipboardListIcon
+    },
+    {
+        name: "Available Slot",
+        path: "/available",
+        icon: CalendarIcon,
+        roles: [Roles.doctor.value]
+    },
+    {
+        name: "Setting",
+        path: "/setting",
+        icon: CogIcon,
+        roles: [Roles.admin.value]
     },
 ];
 

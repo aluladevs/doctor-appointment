@@ -3,13 +3,21 @@ import IconButton from "./IconButton";
 import {BellIcon, LogoutIcon, UserIcon} from "@heroicons/react/outline";
 import Avatar from "./Avatar";
 import {useState} from "react";
+import {signOut} from "next-auth/client";
 
-export default function MainAppBar({ title, subtitle }) {
+export default function MainAppBar({ title, subtitle, isScroll }) {
     const [notifOpen, setNotifOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState(false);
 
+    const handleSignOut = () => {
+        signOut({
+            callbackUrl: "/"
+        });
+    };
+
     return (
-        <div className="fixed z-10 w-5/6 bg-primary-light px-10 py-4 flex justify-between items-center">
+        <div className={`fixed z-10 right-0 w-11/12 px-10 py-4 pl-40 flex justify-between items-center
+        ${isScroll ? "shadow-lg bg-white" : "bg-primary-light"}`}>
             <div>
                 {title && (
                     <h1 className="text-2xl font-semibold">{title}</h1>
@@ -42,7 +50,7 @@ export default function MainAppBar({ title, subtitle }) {
                         <UserIcon width={20}/>
                         <button>Profile</button>
                     </div>
-                    <div className="w-44 flex py-2.5 px-5">
+                    <div className="w-44 flex py-2.5 px-5" onClick={handleSignOut}>
                         <LogoutIcon width={20}/>
                         <button>Logout</button>
                     </div>
