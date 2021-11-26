@@ -1,7 +1,5 @@
-import {User} from "../../../models";
+import {Department} from "../../../models";
 import createHandler from "../../../lib/middleware";
-import ShortUniqueId from "short-unique-id";
-import {generatePassword} from "../../../lib/password";
 
 const handler = createHandler();
 
@@ -30,13 +28,13 @@ handler.get(async (req, res) => {
         query.role = role;
     }
 
-    const results = await User
+    const results = await Department
         .find(query)
         .skip(skip)
         .limit(limit ? parseInt(limit) : 0)
         .sort(sortBy);
 
-    const counts = await User.countDocuments(query);
+    const counts = await Department.countDocuments(query);
 
     return res.status(200).json({
         query: { ...query, sort: sortBy },
@@ -52,10 +50,7 @@ handler.get(async (req, res) => {
 handler.post(async (req, res) => {
     let params = req.body;
 
-    params.password = await generatePassword(params.password);
-    params.uid = new ShortUniqueId({ length: 8 });
-
-    const result = await User.create(params);
+    const result = await Department.create(params);
 
     return res.status(200).json(result);
 });

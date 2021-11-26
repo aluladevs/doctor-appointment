@@ -4,10 +4,22 @@ import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 export default function Select(props) {
     const { options, value, name, label, selected, onChange, className, useSearch } = props;
     const [open, setOpen] = useState(false);
-    console.log(value, selected)
+
+    const [option, setOption] = useState(options);
+    
+    const changeSearch = (value) => {
+        const condition = new RegExp(value);
+
+        const result = options.filter(function (el) {
+            return condition.test(el.name?.toLowerCase());
+        });
+
+        setOption(result);
+    }
+
     return (
         <div className={className}>
-            <p className="text-sm">{label}</p>
+            <p className="text-xs">{label}</p>
             <div className="relative">
                 <button type="button" onClick={() => setOpen(!open)}
                         className="h-11 relative w-full bg-gray-100 rounded-xl shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm">
@@ -22,10 +34,12 @@ export default function Select(props) {
                         aria-activedescendant="listbox-option-3">
                         {useSearch && (
                             <li className="p-2">
-                                <input className="p-2 border-2 rounded-md h-8 w-full focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"/>
+                                <input
+                                    onChange={(e) => changeSearch(e.target.value)}
+                                    className="p-2 border-2 rounded-md h-8 w-full focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"/>
                             </li>
                         )}
-                        {options.map((item, i) => (
+                        {option.map((item, i) => (
                             <li key={i} className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
                                 id="listbox-option-0" onClick={() => onChange({target: {name, value: item}})}>
                                 <div className="flex items-center">

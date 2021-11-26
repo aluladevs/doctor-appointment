@@ -29,10 +29,6 @@ export default function Home(props) {
     doctor: null
   });
 
-  useEffect(() => {
-    console.log(selector)
-  }, []);
-
   const handleChangeForm = (e) => {
     setForm({
       [e.target.name]: e.target.value
@@ -133,21 +129,21 @@ export default function Home(props) {
       </Layout>
   )
 }
-
-export async function getServerSideProps(ctx) {
-  // get the current environment
-  let dev = process.env.NODE_ENV !== 'production';
-  let { DEV_URL, PROD_URL } = process.env;
-
-  await fetch(`${dev ? DEV_URL : PROD_URL}/api/default`)
-
-  let response = await fetch(`${dev ? DEV_URL : PROD_URL}/api/user`);
-
-  let data = await response.json();
-
-  return {
-    props: {
-      users: data,
-    },
-  };
-}
+//
+// export async function getServerSideProps(ctx) {
+//   // get the current environment
+//   let dev = process.env.NODE_ENV !== 'production';
+//   let { DEV_URL, PROD_URL } = process.env;
+//
+//   await fetch(`${dev ? DEV_URL : PROD_URL}/api/default`)
+//
+//   let response = await fetch(`${dev ? DEV_URL : PROD_URL}/api/user`);
+//
+//   let data = await response.json();
+//
+//   return {
+//     props: {
+//       users: data,
+//     },
+//   };
+// }

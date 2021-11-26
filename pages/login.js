@@ -59,7 +59,7 @@ export default function Login() {
                         message={error}/>
                 )}
 
-                <form className="w-full" onSubmit={formik.handleSubmit}>
+                <form className="w-full p-5 shadow-lg" onSubmit={formik.handleSubmit}>
                     <div className="w-full my-7">
                         <Input
                             label="Email Address"

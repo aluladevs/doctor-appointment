@@ -28,8 +28,7 @@ export default function DepartmentChart() {
             <h2 className="text-xl mb-3">Patient by Department</h2>
             <Doughnut
                 data={data}
-                height={150}
-            />
+                height={150}/>
         </div>
     );
 }

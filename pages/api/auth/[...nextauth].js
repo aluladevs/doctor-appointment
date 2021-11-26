@@ -1,7 +1,8 @@
 import NextAuth from 'next-auth'
 import Providers from "next-auth/providers";
-import User from "../../../models/user";
 import {comparePassword} from "../../../lib/password";
+import {User} from "../../../models";
+import mongoose from "mongoose";
 
 const options = {
     site: process.env.NEXTAUTH_URL,
@@ -16,19 +17,30 @@ const options = {
                 password: {label: "Password", type: "password"}
             },
             authorize: async (credentials) => {
-                const user = await User.findOne({ email: credentials.email });
-                console.log(user);
-                if (user) {
-                    const checkPassword = await comparePassword(user.password, credentials.password);
+                const MONGODB_URI = process.env.MONGODB_URI
 
-                    if (!checkPassword) {
-                        throw new Error("Password doesnt match");
+                const connect = await mongoose.connect(MONGODB_URI, {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                });
+
+                if (connect) {
+                    const user = await User.findOne({ email: credentials.email });
+
+                    if (user) {
+                        const checkPassword = await comparePassword(user.password, credentials.password);
+
+                        if (!checkPassword) {
+                            throw new Error("Password doesnt match");
+                        }
+
+                        return user;
                     }
 
-                    return user;
+                    throw new Error("Password doesnt match");
                 }
 
-                throw new Error("Password doesnt match");
+                throw new Error("Unable to connect to database");
             }
         })
     ],

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import MainLayout from "../../components/MainLayout";
 import Card from "../../components/Card";
 import Pagination from "../../components/Pagination";
@@ -7,6 +8,9 @@ import Input from "../../components/Input";
 import Select from "../../components/Select";
 import {DefaultSort} from "../../constants/filter";
 import FilterDialog from "../../components/FilterDialog";
+import Chip from "../../components/Chip";
+import IconButton from "../../components/IconButton";
+import {PencilAltIcon, PlusIcon, TrashIcon} from "@heroicons/react/solid";
 
 export default function User() {
     const [users, setUsers] = useState([]);
@@ -28,7 +32,7 @@ export default function User() {
                 setPagination(res.data.pagination);
             })
     }
-    console.log(filter.sort)
+
     return (
         <MainLayout
             title="User">
@@ -51,6 +55,12 @@ export default function User() {
                             value={filter.sort}
                             options={DefaultSort}/>
                     </FilterDialog>
+                    <Link href="/user/create">
+                        <button className="w-36 h-11 px-4 flex items-center justify-center rounded-xl bg-primary text-white text-sm">
+                            <PlusIcon className="w-4 mr-1"/>
+                            Add Data
+                        </button>
+                    </Link>
                 </div>
                 <table className="w-full table-auto">
                     <thead>
@@ -59,7 +69,7 @@ export default function User() {
                         <th>Email</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Option</th>
+                        <th className="text-right">Option</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,6 +78,21 @@ export default function User() {
                             <td>{e.name}</td>
                             <td>{e.email}</td>
                             <td>{e.role.join(", ")}</td>
+                            <td>
+                                {e.status === 1 ? (
+                                    <Chip className="bg-success text-white">Active</Chip>
+                                ) : (
+                                    <Chip className="bg-red-700 text-white">Non Active</Chip>
+                                )}
+                            </td>
+                            <td className="flex gap-4 justify-end">
+                                <IconButton color="yellow-400">
+                                    <PencilAltIcon className="h-4 w-4 text-white"/>
+                                </IconButton>
+                                <IconButton color="red-400">
+                                    <TrashIcon className="h-4 w-4 text-white"/>
+                                </IconButton>
+                            </td>
                         </tr>
                     ))}
                     </tbody>

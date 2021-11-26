@@ -1,4 +1,4 @@
-import {User} from "../../../models";
+import {Department} from "../../../models";
 import createHandler from "../../../lib/middleware";
 
 const handler = createHandler();
@@ -6,7 +6,7 @@ const handler = createHandler();
 handler.get(async (req, res) => {
     const { id } = req.params;
 
-    const result = await User.findOne(id);
+    const result = await Department.findOne(id);
 
     return res.status(200).json(result);
 });
@@ -14,7 +14,7 @@ handler.get(async (req, res) => {
 handler.patch(async (req, res) => {
     const { id } = req.params;
 
-    await User.findByIdAndUpdate(id, req.body);
+    await Department.findByIdAndUpdate(id, req.body);
 
     return res.status(200).json({
         success: true,
@@ -25,7 +25,7 @@ handler.patch(async (req, res) => {
 handler.delete(async (req, res) => {
     const { id } = req.params;
 
-    await User.findByIdAndDelete(id);
+    await Department.findByIdAndDelete(id);
 
     return res.status(200).json({
         success: true,
