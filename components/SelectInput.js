@@ -2,8 +2,25 @@ import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 import {useState} from "react";
 
 export default function SelectInput(props) {
-    const { options, label, name, value, onChange } = props;
+    const { options, label, selected, onSelectChange } = props;
     const [open, setOpen] = useState(false);
+
+    const [option, setOption] = useState(options);
+
+    const changeSearch = (value) => {
+        const condition = new RegExp(value.toLowerCase());
+
+        const result = options.filter(function (el) {
+            return condition.test(el.name?.toLowerCase());
+        });
+
+        setOption(result);
+    }
+    
+    const changeSelect = (value) => {
+        onSelectChange(value);
+        setOpen(!open);
+    }
 
     return (
         <div className="w-full">
@@ -12,7 +29,7 @@ export default function SelectInput(props) {
                 <button
                     onClick={() => setOpen(!open)}
                     className="h-11 w-1/5 pl-4 pr-2 flex items-center justify-between bg-gray-100 rounded-tl-xl rounded-bl-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm">
-                    +62
+                    +{selected.value}
                     <SelectorIcon className="h-5 w-5 text-gray-400"/>
                 </button>
                 {open && (
@@ -20,17 +37,19 @@ export default function SelectInput(props) {
                         tabIndex="-1" role="listbox" aria-labelledby="listbox-label"
                         aria-activedescendant="listbox-option-3">
                         <li className="p-2">
-                            <input className="p-2 border-2 rounded-md h-8 w-full focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"/>
+                            <input
+                                onChange={(e) => changeSearch(e.target.value)}
+                                className="p-2 border-2 rounded-md h-8 w-full focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"/>
                         </li>
-                        {options.map((item, i) => (
+                        {option.map((item, i) => (
                             <li key={i} className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
-                                id="listbox-option-0" onClick={() => onChange({target: {name, value: item}})}>
+                                id="listbox-option-0" onClick={() => changeSelect(item)}>
                                 <div className="flex items-center">
                                     <span className="font-normal ml-3 block truncate">
                                         {item.name}
                                     </span>
                                 </div>
-                                {value === item && (
+                                {selected === item && (
                                     <span className="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
                                         <CheckIcon className="h-5 w-5"/>
                                     </span>

@@ -8,7 +8,7 @@ export default function Select(props) {
     const [option, setOption] = useState(options);
     
     const changeSearch = (value) => {
-        const condition = new RegExp(value);
+        const condition = new RegExp(value.toLowerCase());
 
         const result = options.filter(function (el) {
             return condition.test(el.name?.toLowerCase());

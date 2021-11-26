@@ -10,6 +10,7 @@ import Banner from "../assets/frontpage-illustration.svg";
 import SelectInput from "../components/SelectInput";
 import TextArea from "../components/TextArea";
 import {useSelector} from "react-redux";
+import {Country} from "country-state-city";
 
 const doctors = [
   { name: "A" },
@@ -23,6 +24,7 @@ const doctors = [
 
 export default function Home(props) {
   const selector = useSelector(state => state.general);
+  const countries = Country.getAllCountries();
   const [image, setImage] = useState(null);
 
   const [form, setForm] = useState({
@@ -48,12 +50,6 @@ export default function Home(props) {
       body: formData
     });
   }
-
-  const countries = [
-    { name: "Indonesia" },
-    { name: "Australia" },
-    { name: "Singapore" },
-  ];
 
   const slots = [
     "12:00 - 13:00",
@@ -104,7 +100,7 @@ export default function Home(props) {
             <div>
               <SelectInput
                   label="Phone Number"
-                  options={countries}/>
+                  options={countries.map(e => ({...e, value: e.phonecode}))}/>
             </div>
           </div>
           <div className="mt-4">
