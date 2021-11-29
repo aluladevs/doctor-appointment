@@ -64,6 +64,7 @@ export default function Login() {
                         <Input
                             label="Email Address"
                             name="email"
+                            value={formik.values.email}
                             onChange={formik.handleChange}
                             error={formik.errors.email}/>
                     </div>
@@ -72,6 +73,7 @@ export default function Login() {
                             label="Password"
                             type="password"
                             name="password"
+                            value={formik.values.password}
                             onChange={formik.handleChange}
                             error={formik.errors.password}/>
                     </div>

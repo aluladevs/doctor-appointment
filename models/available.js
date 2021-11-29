@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
-const AppointmentSchema = new mongoose.Schema({
-    doctorId: {
+const AvailableSchema = new mongoose.Schema({
+    doctor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     date: Date,
-    slots: Array
+    slots: [
+        {
+            start: String,
+            end: String
+        }
+    ]
 }, { timestamps: true });
 
-export default mongoose.models.Appointment || mongoose.model('Appointment', AppointmentSchema);
+export const Available = mongoose.models.Available || mongoose.model('Available', AvailableSchema);

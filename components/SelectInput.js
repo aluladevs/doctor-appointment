@@ -2,7 +2,7 @@ import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 import {useState} from "react";
 
 export default function SelectInput(props) {
-    const { options, label, selected, onSelectChange } = props;
+    const { options, label, selected, onSelectChange, ...rest } = props;
     const [open, setOpen] = useState(false);
 
     const [option, setOption] = useState(options);
@@ -24,18 +24,17 @@ export default function SelectInput(props) {
 
     return (
         <div className="w-full">
-            <p className="text-sm">{label}</p>
+            <p className="text-xs">{label}</p>
             <div className="flex">
                 <button
+                    type="button"
                     onClick={() => setOpen(!open)}
                     className="h-11 w-1/5 pl-4 pr-2 flex items-center justify-between bg-gray-100 rounded-tl-xl rounded-bl-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm">
-                    +{selected.value}
+                    +{selected?.value}
                     <SelectorIcon className="h-5 w-5 text-gray-400"/>
                 </button>
                 {open && (
-                    <ul className="absolute z-10 mt-12 bg-white shadow-lg max-h-56 rounded-xl py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                        tabIndex="-1" role="listbox" aria-labelledby="listbox-label"
-                        aria-activedescendant="listbox-option-3">
+                    <ul className="absolute z-10 mt-12 bg-white shadow-lg max-h-56 rounded-xl py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                         <li className="p-2">
                             <input
                                 onChange={(e) => changeSearch(e.target.value)}
@@ -43,7 +42,7 @@ export default function SelectInput(props) {
                         </li>
                         {option.map((item, i) => (
                             <li key={i} className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
-                                id="listbox-option-0" onClick={() => changeSelect(item)}>
+                                onClick={() => changeSelect(item)}>
                                 <div className="flex items-center">
                                     <span className="font-normal ml-3 block truncate">
                                         {item.name}
@@ -61,7 +60,7 @@ export default function SelectInput(props) {
 
                 <input
                     className="w-full h-11 px-4 ml-0.5 rounded-tr-xl rounded-br-xl bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                    {...props}/>
+                    {...rest}/>
             </div>
         </div>
     )

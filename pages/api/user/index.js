@@ -1,7 +1,8 @@
-import {User} from "../../../models";
+import {Doctor, User} from "../../../models";
 import createHandler from "../../../lib/middleware";
 import ShortUniqueId from "short-unique-id";
 import {generatePassword} from "../../../lib/password";
+import Roles from "../../../constants/role";
 
 const handler = createHandler();
 
@@ -51,11 +52,20 @@ handler.get(async (req, res) => {
 
 handler.post(async (req, res) => {
     let params = req.body;
+    const uid = new ShortUniqueId({ length: 8 });
 
     params.password = await generatePassword(params.password);
-    params.uid = new ShortUniqueId({ length: 8 });
+    params.uid = uid();
 
     const result = await User.create(params);
+
+    if (result.role.includes(Roles.doctor.value)) {
+        await Doctor.create({
+            userId: result._id,
+            departmentId: params.department,
+            experience: params.experience
+        });
+    }
 
     return res.status(200).json(result);
 });

@@ -16,7 +16,7 @@ export default function MainAppBar({ title, subtitle, isScroll }) {
     };
 
     return (
-        <div className={`fixed z-10 right-0 w-11/12 px-10 py-4 pl-40 flex justify-between items-center
+        <div className={`fixed z-10 right-0 w-11/12 px-10 py-4 pl-52 flex justify-between items-center
         ${isScroll ? "shadow-lg bg-white" : "bg-primary-light"}`}>
             <div>
                 {title && (

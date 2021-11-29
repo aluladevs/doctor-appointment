@@ -17,4 +17,6 @@ export const GeneralSlice = createSlice({
     }
 });
 
+export const GeneralActions = GeneralSlice.actions;
+
 export default GeneralSlice;

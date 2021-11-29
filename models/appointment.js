@@ -10,8 +10,12 @@ const AppointmentSchema = new mongoose.Schema({
         ref: 'User'
     },
     name: String,
+    email: String,
+    description: String,
+    phoneCode: String,
+    contact: String,
     date: Date,
     slot: Object
 }, { timestamps: true });
 
-export default mongoose.models.Appointment || mongoose.model('Appointment', AppointmentSchema);
+export const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', AppointmentSchema);

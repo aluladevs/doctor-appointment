@@ -10,6 +10,26 @@ const GetDepartments = (query) => {
     return ApiInstance.get(`/department${queryString}`);
 }
 
-export const DepartmentService = {
-    GetDepartments
+const GetDepartmentById = (id) => {
+    return ApiInstance.get(`/department/${id}`);
 }
+
+const CreateDepartment = (params) => {
+    return ApiInstance.post("/department", params);
+}
+
+const UpdateDepartment = (id, params) => {
+    return ApiInstance.patch(`/department/${id}`, params);
+}
+
+const DeleteDepartment = (id) => {
+    return ApiInstance.delete(`/department/${id}`);
+}
+
+export const DepartmentService = {
+    GetDepartments,
+    GetDepartmentById,
+    CreateDepartment,
+    UpdateDepartment,
+    DeleteDepartment
+};

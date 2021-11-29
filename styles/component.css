@@ -6,3 +6,7 @@
 .shadow {
     box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
 }
+
+.modal {
+    transition: opacity 0.25s ease;
+}

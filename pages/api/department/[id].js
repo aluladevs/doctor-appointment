@@ -4,7 +4,7 @@ import createHandler from "../../../lib/middleware";
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.query;
 
     const result = await Department.findOne(id);
 
@@ -12,7 +12,7 @@ handler.get(async (req, res) => {
 });
 
 handler.patch(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.query;
 
     await Department.findByIdAndUpdate(id, req.body);
 
@@ -23,7 +23,7 @@ handler.patch(async (req, res) => {
 });
 
 handler.delete(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.query;
 
     await Department.findByIdAndDelete(id);
 

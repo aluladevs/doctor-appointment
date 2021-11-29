@@ -5,7 +5,7 @@ import {
     HomeIcon,
     IdentificationIcon, TemplateIcon,
     UsersIcon
-} from "@heroicons/react/outline";
+} from "@heroicons/react/solid";
 import Roles from "./role";
 
 const Menus = [

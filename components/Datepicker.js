@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import moment from "moment";
-import {ChevronLeftIcon, ChevronRightIcon, SelectorIcon} from "@heroicons/react/solid";
+import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/solid";
 import {CalendarIcon} from "@heroicons/react/outline";
 
-export default function Datepicker({ label }) {
+export default function Datepicker({ label, name, value, onChange, error }) {
     const [open, setOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1);
     const [year, setYear] = useState(moment().year());
@@ -11,6 +11,12 @@ export default function Datepicker({ label }) {
     const [selectedDate, setSelectedDate] = useState();
     const today = moment().format("YYYY-MM-DD");
     const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
+    useEffect(() => {
+        if (value) {
+            setSelectedDate(moment(value).format("YYYY-MM-DD"));
+        }
+    }, [value]);
 
     const nextMonth = () => {
         if (selectedMonth < 12) {
@@ -87,7 +93,7 @@ export default function Datepicker({ label }) {
 
     return (
         <div>
-            <p className="text-sm">{label}</p>
+            <p className="text-xs">{label}</p>
             <button type="button" onClick={() => setOpen(!open)}
                     className="h-11 relative w-full bg-gray-100 rounded-xl shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm">
                 <span className="block truncate">{selectedDate}</span>
@@ -97,7 +103,7 @@ export default function Datepicker({ label }) {
             </button>
 
             {open && (
-                <div className="w-72 mt-2 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 absolute">
+                <div className="w-72 mt-2 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 absolute z-10">
                     <div className="p-2 flex justify-between items-center rounded-lg">
                         <button className="p-1 bg-gray-100 rounded-md" onClick={prevMonth}>
                             <ChevronLeftIcon className="h-5 w-5 text-gray-700"/>
@@ -119,7 +125,11 @@ export default function Datepicker({ label }) {
                                 {item.map((e, j) => (
                                     <button
                                         key={j}
-                                        onClick={() => setSelectedDate(e.date)}
+                                        onClick={() => {
+                                            onChange({target: { name, value: e.date}});
+                                            setSelectedDate(e.date);
+                                            setOpen(!open)
+                                        }}
                                         className={`h-10 w-10 p-1 rounded-lg text-center text-sm
                                         ${!e.isCurrentMonth && 'text-gray-400'}
                                         ${e.date === today && 'bg-blue-200'}`}>
@@ -130,6 +140,10 @@ export default function Datepicker({ label }) {
                         ))}
                     </div>
                 </div>
+            )}
+
+            {error && (
+                <p className="mt-0.5 text-xs text-red-700">{error}</p>
             )}
         </div>
     )

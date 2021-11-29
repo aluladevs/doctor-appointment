@@ -3,6 +3,7 @@ import Providers from "next-auth/providers";
 import {comparePassword} from "../../../lib/password";
 import {User} from "../../../models";
 import mongoose from "mongoose";
+import {UserStatus} from "../../../constants/status";
 
 const options = {
     site: process.env.NEXTAUTH_URL,
@@ -28,6 +29,10 @@ const options = {
                     const user = await User.findOne({ email: credentials.email });
 
                     if (user) {
+                        if (user.status === 0) {
+                            throw new Error("Unable to login. Please contact admin!")
+                        }
+
                         const checkPassword = await comparePassword(user.password, credentials.password);
 
                         if (!checkPassword) {
@@ -37,7 +42,7 @@ const options = {
                         return user;
                     }
 
-                    throw new Error("Password doesnt match");
+                    throw new Error("Account not found");
                 }
 
                 throw new Error("Unable to connect to database");

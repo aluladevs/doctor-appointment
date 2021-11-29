@@ -1,11 +1,15 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 
 export default function Select(props) {
-    const { options, value, name, label, selected, onChange, className, useSearch } = props;
+    const { options, value, name, label, onChange, className, useSearch, error } = props;
     const [open, setOpen] = useState(false);
 
     const [option, setOption] = useState(options);
+
+    useEffect(() => {
+        setOption(options);
+    }, [options]);
     
     const changeSearch = (value) => {
         const condition = new RegExp(value.toLowerCase());
@@ -17,21 +21,24 @@ export default function Select(props) {
         setOption(result);
     }
 
+    const selectOption = (value) => {
+        onChange({target: {name, value: value}});
+        setOpen(!open);
+    }
+
     return (
         <div className={className}>
             <p className="text-xs">{label}</p>
             <div className="relative">
                 <button type="button" onClick={() => setOpen(!open)}
                         className="h-11 relative w-full bg-gray-100 rounded-xl shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm">
-                          <span className="block truncate">{selected}</span>
+                          <span className="block truncate">{value?.name ?? ''}</span>
                     <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon className="h-5 w-5 text-gray-400"/>
                     </span>
                 </button>
                 {open && (
-                    <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-xl py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                        tabIndex="-1" role="listbox" aria-labelledby="listbox-label"
-                        aria-activedescendant="listbox-option-3">
+                    <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-xl py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                         {useSearch && (
                             <li className="p-2">
                                 <input
@@ -41,7 +48,7 @@ export default function Select(props) {
                         )}
                         {option.map((item, i) => (
                             <li key={i} className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
-                                id="listbox-option-0" onClick={() => onChange({target: {name, value: item}})}>
+                                onClick={() => selectOption(item)}>
                                 <div className="flex items-center">
                                     <span className="font-normal ml-3 block truncate">
                                         {item.name}
@@ -57,6 +64,9 @@ export default function Select(props) {
                     </ul>
                 )}
             </div>
+            {error && (
+                <p className="mt-0.5 text-xs text-red-700">{error}</p>
+            )}
         </div>
     )
 }

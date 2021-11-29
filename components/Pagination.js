@@ -29,7 +29,8 @@ export default function Pagination(props) {
             {data.map((e) => (
                 <button
                     key={e}
-                    className={`h-9 w-9 mx-1 rounded-xl text-sm ${e === parseInt(page) ? "bg-primary text-white" : "text-gray-600"}`}>
+                    className={`h-9 w-9 mx-1 rounded-xl text-sm ${e === parseInt(page) ? "bg-primary text-white" : "text-gray-600"}`}
+                    onClick={() => onChange(e)}>
                     {e}
                 </button>
             ))}

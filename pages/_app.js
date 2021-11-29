@@ -5,7 +5,6 @@ import { Provider as AuthProvider } from 'next-auth/client'
 import { Provider } from 'react-redux';
 import store from "../lib/store";
 
-
 function MyApp({ Component, pageProps }) {
   return (
       <Provider store={store}>

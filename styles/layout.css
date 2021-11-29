@@ -5,7 +5,7 @@
 .sidebar {
     height: 100vh;
     position: fixed;
-    z-index: 99;
+    z-index: 20;
     text-align: center;
     background: #FFFFFF;
     border-top-right-radius: 30px;
