@@ -73,6 +73,7 @@ export default function Datepicker({ label, name, value, onChange, error }) {
                     }
                 } else {
                     row.push({
+                        isToday: moment(`${year}-${selectedMonth}-${num}`).isSame(new Date()),
                         isCurrentMonth: true,
                         day: num,
                         date: moment(`${year}-${selectedMonth}-${num}`).format("YYYY-MM-DD")
@@ -105,11 +106,11 @@ export default function Datepicker({ label, name, value, onChange, error }) {
             {open && (
                 <div className="w-72 mt-2 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 absolute z-10">
                     <div className="p-2 flex justify-between items-center rounded-lg">
-                        <button className="p-1 bg-gray-100 rounded-md" onClick={prevMonth}>
+                        <button type="button" className="p-1 bg-gray-100 rounded-md" onClick={prevMonth}>
                             <ChevronLeftIcon className="h-5 w-5 text-gray-700"/>
                         </button>
                         <p className="text-sm font-semibold">{moment(`${year}-${selectedMonth}`).format("MMMM YYYY")}</p>
-                        <button className="p-1 bg-gray-100 rounded-md" onClick={nextMonth}>
+                        <button type="button" className="p-1 bg-gray-100 rounded-md" onClick={nextMonth}>
                             <ChevronRightIcon className="h-5 w-5 text-gray-700"/>
                         </button>
                     </div>
@@ -125,6 +126,7 @@ export default function Datepicker({ label, name, value, onChange, error }) {
                                 {item.map((e, j) => (
                                     <button
                                         key={j}
+                                        type="button"
                                         onClick={() => {
                                             onChange({target: { name, value: e.date}});
                                             setSelectedDate(e.date);
@@ -132,7 +134,7 @@ export default function Datepicker({ label, name, value, onChange, error }) {
                                         }}
                                         className={`h-10 w-10 p-1 rounded-lg text-center text-sm
                                         ${!e.isCurrentMonth && 'text-gray-400'}
-                                        ${e.date === today && 'bg-blue-200'}`}>
+                                        ${item.isToday && 'bg-blue-200'}`}>
                                         {e.day}
                                     </button>
                                 ))}

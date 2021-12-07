@@ -31,7 +31,7 @@ export default function Select(props) {
             <p className="text-xs">{label}</p>
             <div className="relative">
                 <button type="button" onClick={() => setOpen(!open)}
-                        className="h-11 relative w-full bg-gray-100 rounded-xl shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm">
+                        className="h-11 relative w-full bg-gray-100 rounded-xl shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none sm:text-sm">
                           <span className="block truncate">{value?.name ?? ''}</span>
                     <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon className="h-5 w-5 text-gray-400"/>

@@ -10,16 +10,16 @@ const GetDoctors = (query) => {
     return ApiInstance.get(`/doctor${queryString}`);
 }
 
-const GetDoctorById = (id) => {
-    return ApiInstance.get(`/doctor/${id}`);
+const GetDoctorByUid = (uid) => {
+    return ApiInstance.get(`/doctor/${uid}`);
 }
 
 const CreateDoctor = (params) => {
     return ApiInstance.post("/doctor", params);
 }
 
-const UpdateDoctor = (id, params) => {
-    return ApiInstance.patch(`/doctor/${id}`, params);
+const UpdateDoctor = (uid, params) => {
+    return ApiInstance.patch(`/doctor/${uid}`, params);
 }
 
 const DeleteDoctor = (id) => {
@@ -28,7 +28,7 @@ const DeleteDoctor = (id) => {
 
 export const DoctorService = {
     GetDoctors,
-    GetDoctorById,
+    GetDoctorByUid,
     CreateDoctor,
     UpdateDoctor,
     DeleteDoctor

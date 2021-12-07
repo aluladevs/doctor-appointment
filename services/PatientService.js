@@ -1,35 +1,35 @@
 import {ApiInstance} from "../lib/axios";
 
-const GetDoctors = (query) => {
+const GetPatients = (query) => {
     let queryString = "";
 
     if (query) {
         queryString = `?${new URLSearchParams(query).toString()}`;
     }
 
-    return ApiInstance.get(`/doctor${queryString}`);
+    return ApiInstance.get(`/patient${queryString}`);
 }
 
-const GetDoctorById = (id) => {
-    return ApiInstance.get(`/doctor/${id}`);
+const GetPatientById = (id) => {
+    return ApiInstance.get(`/patient/${id}`);
 }
 
-const CreateDoctor = (params) => {
-    return ApiInstance.post("/doctor", params);
+const CreatePatient = (params) => {
+    return ApiInstance.post("/patient", params);
 }
 
-const UpdateDoctor = (id, params) => {
-    return ApiInstance.patch(`/doctor/${id}`, params);
+const UpdatePatient = (id, params) => {
+    return ApiInstance.patch(`/patient/${id}`, params);
 }
 
-const DeleteDoctor = (id) => {
-    return ApiInstance.delete(`/doctor/${id}`);
+const DeletePatient = (id) => {
+    return ApiInstance.delete(`/patient/${id}`);
 }
 
-export const DoctorService = {
-    GetDoctors,
-    GetDoctorById,
-    CreateDoctor,
-    UpdateDoctor,
-    DeleteDoctor
+export const PatientService = {
+    GetPatients,
+    GetPatientById,
+    CreatePatient,
+    UpdatePatient,
+    DeletePatient
 };

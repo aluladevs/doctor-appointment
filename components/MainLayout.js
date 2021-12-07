@@ -55,9 +55,9 @@ export default function MainLayout(props) {
                 </div>
                 {Menus.map(({name, path, icon: Component}, i) => (
                     <Link key={i} href={path}>
-                        <button className={`w-full flex bg-${path === pathname ? "primary" : "transparent"} py-3.5 px-4 mb-2.5 rounded-2xl`}>
-                            <Component width={20} className={`mr-2.5 ${path === pathname ? "text-white" : "text-gray-400"}`}/>
-                            <p className={`${path === pathname ? "text-white" : "text-gray-400"} text-sm`}>{name}</p>
+                        <button className={`w-full flex bg-${pathname.includes(path) ? "primary" : "transparent"} py-3.5 px-4 mb-2.5 rounded-2xl`}>
+                            <Component width={20} className={`mr-2.5 ${pathname.includes(path) ? "text-white" : "text-gray-400"}`}/>
+                            <p className={`${pathname.includes(path) ? "text-white" : "text-gray-400"} text-sm`}>{name}</p>
                         </button>
                     </Link>
                 ))}

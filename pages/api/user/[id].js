@@ -21,11 +21,12 @@ handler.get(async (req, res) => {
 handler.patch(async (req, res) => {
     const { id } = req.query;
 
-    await User.findByIdAndUpdate(id, req.body);
+    const user = await User.findByIdAndUpdate(id, req.body);
 
     return res.status(200).json({
         success: true,
-        message: "Successfully deleted data."
+        data: user,
+        message: "Successfully updated data."
     });
 });
 

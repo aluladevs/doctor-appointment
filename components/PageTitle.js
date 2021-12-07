@@ -9,12 +9,12 @@ export default function PageTitle({ title, subtitle, useBack }) {
         <div className="mb-8 flex items-center gap-4">
             {useBack && (
                 <IconButton onClick={() => router.back()}>
-                    <ArrowLeftIcon className="h-6 w-6"/>
+                    <ArrowLeftIcon className="h-6 w-6 text-gray-600"/>
                 </IconButton>
             )}
             <div>
                 {title && (
-                    <h1 className="text-2xl font-semibold">{title}</h1>
+                    <h1 className="text-2xl font-semibold text-gray-600">{title}</h1>
                 )}
                 {subtitle && (
                     <p className="text-sm">{subtitle}</p>

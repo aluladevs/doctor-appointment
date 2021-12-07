@@ -1,15 +1,30 @@
 import mongoose from "mongoose";
 
 const DoctorSchema = new mongoose.Schema({
-    userId: {
+    uid: String,
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: "User"
     },
-    departmentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Department'
-    },
-    experience: Number
-}, { timestamps: true });
+    name: { type: String, text: true },
+    phoneCode: Object,
+    contact: Number,
+    birthday: String,
+    gender: String,
+    address: String,
+    city: String,
+    country: Object,
+    experience: Number,
+    specialization: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Specialization"
+        }
+    ],
+    status: {
+        type: Number,
+        default: 1
+    }
+});
 
 export const Doctor = mongoose.models.Doctor || mongoose.model('Doctor', DoctorSchema);

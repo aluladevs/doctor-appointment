@@ -1,27 +1,84 @@
-import {User} from "../../../models";
+import {Doctor, Staff, User} from "../../../models";
 import createHandler from "../../../lib/middleware";
 import Roles from "../../../constants/role";
-import ShortUniqueId from "short-unique-id";
 import {generatePassword} from "../../../lib/password";
+import {generateId} from "../../../lib/id";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const users = await User.find({ role: { $in: [Roles.staff.value]}});
+    const { keyword, sort, limit, page } = req.query;
+    let query = {};
+    let sortBy = { createdAt: -1 };
+    let skip = 0;
 
-    return res.status(200).json(users)
+    if (limit && page) {
+        skip = parseInt(limit) * (page - 1);
+    }
+
+    if (keyword) {
+        query.name = { '$regex': '.*' + keyword + '.*', '$options': '$i' };
+        query.email = { '$regex': '.*' + keyword + '.*', '$options': '$i' }
+    }
+
+    if (sort) {
+        const field = sort.split(',');
+
+        sortBy = { [field[0]]: field[1] };
+    }
+
+    const results = await Staff
+        .find(query)
+        .skip(skip)
+        .limit(limit ? parseInt(limit) : 0)
+        .sort(sortBy)
+        .populate('user');
+
+    const counts = await Staff.countDocuments(query);
+
+    return res.status(200).json({
+        query: { ...query, sort: sortBy },
+        pagination: {
+            limit: limit ?? 20,
+            page: page ?? 1,
+            pages: Math.ceil(counts / (limit ?? 20))
+        },
+        data: results
+    });
 });
 
 handler.post(async (req, res) => {
-    let params = req.body;
-    const uid = new ShortUniqueId({ length: 8 });
+    const checkEmail = await User.findOne({ email: req.body.email });
 
-    params.password = await generatePassword(params.password);
-    params.uid = uid();
+    if (checkEmail) {
+        return res.status(200).json({
+            failed: true,
+            message: "Email address already exists. Try another!"
+        });
+    }
 
-    const result = await User.create(params);
+    const password = await generatePassword(req.body.password);
 
-    return res.status(200).json(result);
+    const user = await User.create({
+        ...req.body,
+        role: [Roles.doctor.value],
+        password: password
+    });
+
+    const uid = generateId();
+    const params = {
+        ...req.body,
+        uid,
+        user: user._id,
+        name: req.body.name || user.name
+    };
+
+    await Staff.create(params);
+
+    return res.status(200).json({
+        success: true,
+        message: "Successfully added data."
+    });
 });
 
 export default handler;

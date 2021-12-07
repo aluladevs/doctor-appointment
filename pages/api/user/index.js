@@ -56,13 +56,15 @@ handler.post(async (req, res) => {
 
     params.password = await generatePassword(params.password);
     params.uid = uid();
+    params.status = !params.status ? 1 : 0;
 
     const result = await User.create(params);
 
     if (result.role.includes(Roles.doctor.value)) {
         await Doctor.create({
-            userId: result._id,
-            departmentId: params.department,
+            uid: params.uid,
+            user: result._id,
+            department: params.department,
             experience: params.experience
         });
     }

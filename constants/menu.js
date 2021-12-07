@@ -15,8 +15,8 @@ const Menus = [
         icon: HomeIcon
     },
     {
-        name: "Department",
-        path: "/department",
+        name: "Specialization",
+        path: "/specialization",
         icon: TemplateIcon,
         roles: [Roles.admin.value]
     },

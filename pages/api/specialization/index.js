@@ -1,10 +1,10 @@
-import {Department} from "../../../models";
 import createHandler from "../../../lib/middleware";
+import {Specialization, User} from "../../../models";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const { keyword, sort, role, limit, page } = req.query;
+    const { keyword, sort, limit, page } = req.query;
     let query = {};
     let sortBy = { createdAt: -1 };
     let skip = 0;
@@ -24,17 +24,13 @@ handler.get(async (req, res) => {
         sortBy = { [field[0]]: field[1] };
     }
 
-    if (role) {
-        query.role = role;
-    }
-
-    const results = await Department
+    const results = await Specialization
         .find(query)
         .skip(skip)
         .limit(limit ? parseInt(limit) : 0)
         .sort(sortBy);
 
-    const counts = await Department.countDocuments(query);
+    const counts = await Specialization.countDocuments(query);
 
     return res.status(200).json({
         query: { ...query, sort: sortBy },
@@ -48,11 +44,11 @@ handler.get(async (req, res) => {
 });
 
 handler.post(async (req, res) => {
-    let params = req.body;
+    await Specialization.create(req.body);
 
-    const result = await Department.create(params);
-
-    return res.status(200).json(result);
+    return res.status(200).json({
+        message: "Successfully added data."
+    });
 });
 
 export default handler;

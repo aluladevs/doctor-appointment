@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {DefaultSort} from "../../constants/filter";
-import {AvailableService} from "../../services";
+import {AvailableService, DoctorService} from "../../services";
 import MainLayout from "../../components/MainLayout";
 import Card from "../../components/Card";
 import Input from "../../components/Input";
@@ -8,14 +8,14 @@ import FilterDialog from "../../components/FilterDialog";
 import Select from "../../components/Select";
 import Roles from "../../constants/role";
 import Link from "next/link";
-import {PencilAltIcon, PlusIcon, TrashIcon} from "@heroicons/react/solid";
+import {PlusIcon} from "@heroicons/react/solid";
 import Modal from "../../components/Modal";
 import Avatar from "../../components/Avatar";
 import {useRouter} from "next/router";
 
 export default function Available() {
     const router = useRouter();
-    const [available, setAvailable] = useState([]);
+    const [doctors, setDoctors] = useState([]);
     const [pagination, setPagination] = useState({});
     const [deleteModal, setDeleteModal] = useState(false);
     const [filter, setFilter] = useState({
@@ -44,18 +44,16 @@ export default function Available() {
             }
         }
 
-        fetchAvailable(query);
+        fetchDoctors(query);
     };
 
-    const fetchAvailable = (query) => {
-        AvailableService.GetAvailable(query)
+    const fetchDoctors = (query) => {
+        DoctorService.GetDoctors(query)
             .then(res => {
-                if (res.data?.data) {
-                    setAvailable(res.data.data);
-                    setPagination(res.data.data);
-                }
+                setDoctors(res.data.data);
+                setPagination(res.data.pagination);
             })
-    };
+    }
 
     const deleteData = () => {
         if (selected) {
@@ -104,12 +102,19 @@ export default function Available() {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-4 gap-4">
-                    {available.map((e, i) => (
+                <div className="m-5 grid grid-cols-4 gap-4">
+                    {doctors.map((e, i) => (
                         <Card key={i} className="text-center">
-                            <Avatar text={e.doctor?.name} className="h-32 w-32 my-6 text-5xl"/>
-                            <h2>{e.doctor?.name}</h2>
-                            <button onClick={() => router.push(`/available/doctor/${e.doctor.uid}`)}>
+                            <Avatar text={e.name} className="h-32 w-32 my-6 text-5xl"/>
+                            <h2 className="my-2 text-lg font-medium">{e.name}</h2>
+                            <div className="my-4 flex flex-wrap gap-4 justify-center">
+                                {e.specialization.map((item, j) => (
+                                    <span key={j} className="py-1 px-3 text-sm text-primary text-xs font-semibold rounded-xl bg-gray-50">{item.name}</span>
+                                ))}
+                            </div>
+                            <button
+                                className="w-32 h-11 rounded-xl bg-primary text-white"
+                                onClick={() => router.push(`/available/${e.uid}`)}>
                                 Detail
                             </button>
                         </Card>

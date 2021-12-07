@@ -15,7 +15,11 @@ const GetAvailableById = (id) => {
 }
 
 const GetAvailableByDoctor = (doctor) => {
-    return ApiInstance.get(`/available/doctor/${doctor}`);
+    return ApiInstance.get(`/available/${doctor}`);
+}
+
+const GetAvailableByDoctorDate = (doctor, date) => {
+    return ApiInstance.get(`/available/${doctor}/${date}`);
 }
 
 
@@ -23,8 +27,8 @@ const CreateAvailable = (params) => {
     return ApiInstance.post("/available", params);
 }
 
-const UpdateAvailable = (id, params) => {
-    return ApiInstance.patch(`/available/${id}`, params);
+const UpdateAvailable = (doctor, date, params) => {
+    return ApiInstance.patch(`/available/${doctor}/${date}`, params);
 }
 
 const DeleteAvailable = (id) => {
@@ -35,6 +39,7 @@ export const AvailableService = {
     GetAvailable,
     GetAvailableById,
     GetAvailableByDoctor,
+    GetAvailableByDoctorDate,
     CreateAvailable,
     UpdateAvailable,
     DeleteAvailable

@@ -1,12 +1,12 @@
-import createHandler from "../../../lib/middleware";
-import {Appointment} from "../../../models";
+import createHandler from "../../../../lib/middleware";
+import {Specialization} from "../../../../models";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
     const { id } = req.query;
 
-    const result = await Appointment.findOne(id);
+    const result = await Specialization.findOne({id});
 
     return res.status(200).json(result);
 });
@@ -14,23 +14,19 @@ handler.get(async (req, res) => {
 handler.patch(async (req, res) => {
     const { id } = req.query;
 
-    await Appointment.findByIdAndUpdate(id, req.body);
+    const result = await Specialization.findOneAndUpdate({id}, req.body);
 
-    return res.status(200).json({
-        success: true,
-        message: "Successfully deleted data."
-    });
+    return res.status(200).json(result);
 });
 
 handler.delete(async (req, res) => {
     const { id } = req.query;
 
-    await Appointment.findByIdAndDelete(id);
+    await Specialization.findOneAndDelete({ _id: id });
 
     return res.status(200).json({
-        success: true,
         message: "Successfully deleted data."
-    })
-});
+    });
+})
 
 export default handler;

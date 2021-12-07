@@ -1,4 +1,4 @@
-import {User} from "../../../models";
+import {Staff, User} from "../../../models";
 import createHandler from "../../../lib/middleware";
 
 const handler = createHandler();
@@ -6,7 +6,7 @@ const handler = createHandler();
 handler.get(async (req, res) => {
     const { id } = req.query;
 
-    const result = await User.findById(id);
+    const result = await Staff.findById(id).populate('user');
 
     return res.status(200).json(result);
 });
@@ -18,7 +18,7 @@ handler.patch(async (req, res) => {
 
     return res.status(200).json({
         success: true,
-        message: "Successfully deleted data."
+        message: "Successfully updated data."
     });
 });
 
