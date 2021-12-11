@@ -12,6 +12,7 @@ import {PlusIcon} from "@heroicons/react/solid";
 import Modal from "../../components/Modal";
 import Avatar from "../../components/Avatar";
 import {useRouter} from "next/router";
+import Image from "next/image";
 
 export default function Available() {
     const router = useRouter();
@@ -94,18 +95,18 @@ export default function Available() {
                             options={[{name: "All Role", value: -1}, ...Object.keys(Roles).map(key => Roles[key])]}
                             onChange={({ target }) => setFilter({...filter, role: target.value})}/>
                     </FilterDialog>
-                    <Link href="/available/create">
-                        <button className="w-36 h-11 px-4 flex items-center justify-center rounded-xl bg-primary text-white text-sm">
-                            <PlusIcon className="w-4 mr-1"/>
-                            Add Data
-                        </button>
-                    </Link>
                 </div>
 
                 <div className="m-5 grid grid-cols-4 gap-4">
                     {doctors.map((e, i) => (
                         <Card key={i} className="text-center">
-                            <Avatar text={e.name} className="h-32 w-32 my-6 text-5xl"/>
+                            {e.user?.avatar ? (
+                                <div className="my-6">
+                                    <Image alt="avatar" src={e.user?.avatar} width={128} height={128} className="rounded-full"/>
+                                </div>
+                            ) : (
+                                <Avatar text={e.name} className="h-32 w-32 my-6 text-5xl"/>
+                            )}
                             <h2 className="my-2 text-lg font-medium">{e.name}</h2>
                             <div className="my-4 flex flex-wrap gap-4 justify-center">
                                 {e.specialization.map((item, j) => (

@@ -1,5 +1,5 @@
 import createHandler from "../../../lib/middleware";
-import {Doctor, User} from "../../../models";
+import {Doctor, User, Notification} from "../../../models";
 import {generatePassword} from "../../../lib/password";
 import {generateId} from "../../../lib/id";
 import Roles from "../../../constants/role";
@@ -75,6 +75,12 @@ handler.post(async (req, res) => {
     };
 
     await Doctor.create(params);
+
+    await Notification.create({
+        relatedUser: user._id,
+        title: `New doctor`,
+        description: `${user.name} has been registered.`
+    });
 
     return res.status(200).json({
         success: true,

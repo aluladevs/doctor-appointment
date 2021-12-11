@@ -85,7 +85,6 @@ export default function Create() {
                             name="password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
-                            helper="Leave empty if do not want to change password"
                             prefix={(
                                 <IconButton transparent onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? (

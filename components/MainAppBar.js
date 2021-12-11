@@ -46,12 +46,8 @@ export default function MainAppBar({ title, subtitle, isScroll }) {
 
             {accountOpen && (
                 <div className="absolute bg-white shadow rounded-xl right-10 top-20 py-2.5">
-                    <div className="w-44 flex py-2.5 px-5">
-                        <UserIcon width={20}/>
-                        <button>Profile</button>
-                    </div>
                     <div className="w-44 flex py-2.5 px-5" onClick={handleSignOut}>
-                        <LogoutIcon width={20}/>
+                        <LogoutIcon width={20} className="mr-2"/>
                         <button>Logout</button>
                     </div>
                 </div>

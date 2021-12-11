@@ -5,3 +5,5 @@ export * from "./patient";
 export * from "./staff";
 export * from "./appointment";
 export * from "./available";
+export * from "./setting";
+export * from "./notification";

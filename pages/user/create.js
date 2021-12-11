@@ -81,7 +81,7 @@ export default function Create() {
                 })
         }
     }
-    console.log(formik.values);
+
     return (
         <MainLayout>
             <PageTitle useBack title="Create User"/>

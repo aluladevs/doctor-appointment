@@ -95,7 +95,7 @@ export default function UpdateUser() {
                 });
         }
     }
-
+    console.log(formik.values.avatar)
     return (
         <MainLayout>
             <PageTitle useBack title="Update User"/>
@@ -109,7 +109,7 @@ export default function UpdateUser() {
                                 <UserCircleIcon className="h-40 w-40 mx-auto text-gray-300"/>
                             ) : (
                                 <div className="text-center">
-                                    <Image alt="avatar" src={formik.values.avatar} width={128} height={128} className="rounded-full"/>
+                                    <Image alt="avatar" src={preview || formik.values.avatar} width={128} height={128} className="rounded-full"/>
                                 </div>
                             )}
                         </label>

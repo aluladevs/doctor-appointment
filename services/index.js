@@ -6,3 +6,4 @@ export * from "./AvailableService";
 export * from "./OtherService";
 export * from "./PatientService";
 export * from "./StaffService";
+export * from "./AppointmentService";

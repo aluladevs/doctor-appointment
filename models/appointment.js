@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
 const AppointmentSchema = new mongoose.Schema({
-    doctorId: {
+    doctor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Doctor'
     },
-    patientId: {
+    patient: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Patient'
     },
     name: String,
     email: String,
     description: String,
-    phoneCode: String,
+    phoneCode: Object,
     contact: String,
     date: Date,
     slot: Object

@@ -69,7 +69,7 @@ export default function Update() {
 
     return (
         <MainLayout>
-            <PageTitle title="Update Doctor" useBack/>
+            <PageTitle title="Update Doctors" useBack/>
             <form onSubmit={formik.handleSubmit}>
                 <Card className="my-8">
                     <h1 className="mt-5 mb-5 text-xl font-medium">Account Information</h1>

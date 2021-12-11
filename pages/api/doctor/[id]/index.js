@@ -24,10 +24,8 @@ handler.patch(async (req, res) => {
 handler.delete(async (req, res) => {
     const { id } = req.query;
 
-    // const doctor = await Doctor.findById(id);
-
     const doctor = await Doctor.findByIdAndDelete(id);
-    // await User.findOneAndDelete({ _id: doctor.user });
+    await User.findOneAndDelete({ _id: doctor.user });
 
     return res.status(200).json({
         data: doctor,

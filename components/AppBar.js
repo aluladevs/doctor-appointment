@@ -20,10 +20,10 @@ export default function AppBar({ isScroll }) {
             <Image src={Logo} width={160} height={60}/>
 
             <div className="flex items-center gap-4">
-                <Link href="/">
+                <Link href="/about">
                     <button className="py-2.5 px-7 text-gray-700 text-sm">About</button>
                 </Link>
-                <Link href="/">
+                <Link href="/doctor">
                     <button className="py-2.5 px-7 text-gray-700 text-sm">Our Doctors</button>
                 </Link>
                 {isAuth && (
